@@ -7,7 +7,7 @@ from torchvision import transforms
 import matplotlib.pyplot as plt
 
 from model import shufflenet_v2_x1_0
-
+import torchvision.models
 
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

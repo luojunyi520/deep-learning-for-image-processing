@@ -5,6 +5,7 @@ from torch import Tensor
 import torch.nn as nn
 
 
+
 def channel_shuffle(x: Tensor, groups: int) -> Tensor:
 
     batch_size, num_channels, height, width = x.size()
@@ -179,3 +180,5 @@ def shufflenet_v2_x0_5(num_classes=1000):
                          num_classes=num_classes)
 
     return model
+
+

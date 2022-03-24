@@ -3,13 +3,13 @@ from alexnet_model import AlexNet
 from resnet_model import resnet34
 import matplotlib.pyplot as plt
 import numpy as np
-
+from model import shufflenet_v2_x1_0
 
 # create model
-model = AlexNet(num_classes=5)
+model = shufflenet_v2_x1_0(num_classes=1000)
 # model = resnet34(num_classes=5)
 # load model weights
-model_weight_path = "./AlexNet.pth"  # "resNet34.pth"
+model_weight_path = "./shufflenetv2_x1-5666bf0f80.pth"  # "resNet34.pth"
 model.load_state_dict(torch.load(model_weight_path))
 print(model)
 

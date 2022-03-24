@@ -11,7 +11,9 @@ import torch.optim.lr_scheduler as lr_scheduler
 from model import shufflenet_v2_x1_0
 from my_dataset import MyDataSet
 from utils import read_split_data, train_one_epoch, evaluate
-
+# from torchsummary import summary
+# model = shufflenet_v2_x1_0(num_classes=1000).to('cpu')
+# summary(model, input_size=(3, 255, 255))
 
 def main(args):
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
