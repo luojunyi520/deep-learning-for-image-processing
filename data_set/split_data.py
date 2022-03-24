@@ -1,7 +1,7 @@
 import os
 from shutil import copy, rmtree
 import random
-
+import os
 
 def mk_file(file_path: str):
     if os.path.exists(file_path):
