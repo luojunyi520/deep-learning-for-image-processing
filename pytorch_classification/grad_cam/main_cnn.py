@@ -6,11 +6,16 @@ import matplotlib.pyplot as plt
 from torchvision import models
 from torchvision import transforms
 from utils import GradCAM, show_cam_on_image, center_crop_img
-
+from shufflenet import shufflenet_v2_x1_0
 
 def main():
-    model = models.mobilenet_v3_large(pretrained=True)
-    target_layers = [model.features[-1]]
+    model = shufflenet_v2_x1_0(num_classes=4)
+    model_weight_path = "./model-29.pth"  # "./resNet34.pth"
+    model.load_state_dict(torch.load(model_weight_path, map_location=torch.device('cpu')))
+    target_layers = [model.conv5]
+
+    # model = models.mobilenet_v3_large(pretrained=True)
+    # target_layers = [model.features[-1]]
 
     # model = models.vgg16(pretrained=True)
     # target_layers = [model.features]
@@ -40,7 +45,7 @@ def main():
     input_tensor = torch.unsqueeze(img_tensor, dim=0)
 
     cam = GradCAM(model=model, target_layers=target_layers, use_cuda=False)
-    target_category = 281  # tabby, tabby cat
+    target_category = 1  # tabby, tabby cat
     # target_category = 254  # pug, pug-dog
 
     grayscale_cam = cam(input_tensor=input_tensor, target_category=target_category)

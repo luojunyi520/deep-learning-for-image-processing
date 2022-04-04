@@ -20,14 +20,7 @@ def main():
          transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 
     # load image
-    img_path = "./both.png"
-    assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
-    img = Image.open(img_path)
-    plt.imshow(img)
-    # [N, C, H, W]
-    img = data_transform(img)
-    # expand batch dimension
-    img = torch.unsqueeze(img, dim=0)
+
 
     # read class_indict
     json_path = './class_indices.json'
@@ -49,24 +42,21 @@ def main():
         # input_name = session.get_inputs()[0].name
         # output = session.run([], {input_name:img.data.numpy()})##输出为list，需要转为tensor
         # output = torch.tensor(numpy.array(output)).squeeze()
+        for i in range(0,100):
+            img = Image.open("../image/" + str(i) + ".jpg")
+            image =img
 
-        output = torch.squeeze(model(img.to(device))).cpu()
-        print(output.shape)
-
-        predict = torch.softmax(output, dim=0)
-        predict_cla = torch.argmax(predict).numpy()
-
-
-
-
-    print_res = "class: {}   prob: {:.3}".format(class_indict[str(predict_cla)],
-                                                 predict[predict_cla].numpy())
-    plt.title(print_res)
-    for i in range(len(predict)):
-        print("class: {:10}   prob: {:.3}".format(class_indict[str(i)],
-                                                  predict[i].numpy()))
-    plt.show()
-
+            # [N, C, H, W]
+            img = data_transform(img)
+            # expand batch dimension
+            img = torch.unsqueeze(img, dim=0)
+            output = torch.squeeze(model(img.to(device))).cpu()
+            predict = torch.softmax(output, dim=0)
+            predict_cla = torch.argmax(predict).numpy()
+            img_path = './'+str(label_cla)+str(predict_cla)+"/"
+            if not os.path.exists(img_path):
+                os.mkdir(img_path)
+            image.save(img_path + str(i) + ".png")
 
 if __name__ == '__main__':
     main()

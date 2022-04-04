@@ -1,5 +1,5 @@
 from typing import List, Callable
-from torchvision import models
+
 import torch
 from torch import Tensor
 import torch.nn as nn
@@ -146,7 +146,14 @@ class ShuffleNetV2(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         return self._forward_impl(x)
-
+    # def forward(self, x):
+    #     outputs = []
+    #     for name, module in self.conv1.named_children():
+    #         x = module(x)
+    #         print(name)
+    #         if name in ["0","1","2"]:
+    #             outputs.append(x)
+    #     return outputs
 
 def shufflenet_v2_x1_0(num_classes=1000):
     """
