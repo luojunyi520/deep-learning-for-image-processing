@@ -74,6 +74,7 @@ class GradCAM:
 
     @staticmethod
     def get_loss(output, target_category):
+        # output = output[0]
         loss = 0
         for i in range(len(target_category)):
             loss = loss + output[i, target_category[i]]
@@ -139,6 +140,7 @@ class GradCAM:
             target_category = [target_category] * input_tensor.size(0)
 
         if target_category is None:
+            # output=output[0]
             target_category = np.argmax(output.cpu().data.numpy(), axis=-1)
             print(f"category id: {target_category}")
         else:
